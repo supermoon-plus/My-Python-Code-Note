@@ -26,4 +26,15 @@
 - 【NumPy】Python科学计算的基础包。[【相关文章】](http://c.biancheng.net/numpy/)
 - 【Matplotlib】受欢迎的数据可视化软件包，Python常用的2D绘图库，同时它也提供了一部分3D绘图接口。[【文章】](http://c.biancheng.net/matplotlib/)
 - 【Pandas】一个免费、开源的第三方 Python 库，是 Python 数据分析必不可少的工具之一，它为 Python 数据分析提供了高性能，且易于使用的数据结构。[【文章】](http://c.biancheng.net/pandas/)
+- pywin32
+
+
+
+
+
+
+
+
+
+
 
