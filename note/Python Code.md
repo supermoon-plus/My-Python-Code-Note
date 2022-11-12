@@ -1,6 +1,13 @@
 
+[![百百川](https://img.shields.io/badge/bilibili-%E7%99%BE%E7%99%BE%E5%B7%9D-ff69b4)](https://space.bilibili.com/150478041)
+[![百百川](https://img.shields.io/badge/%E7%9F%A5%E4%B9%8E-%E7%99%BE%E7%99%BE%E5%B7%9D-blue)](https://www.zhihu.com/people/baibaichuan)
+[![百百川](https://img.shields.io/badge/GitHub-750ti-black)](https://github.com/750ti)
+[![百百川](https://img.shields.io/badge/gitee-%E7%99%BE%E7%99%BE%E5%B7%9D-red)](https://gitee.com/gtx750ti)
+![](https://img.shields.io/badge/%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4-2022年11月13日-lightgrey)
+
+
+
 # Python常用代码集 md版
-> 后续代码将在此处更新，2022年5月21日
 
 ---
 
@@ -88,51 +95,30 @@ if cv2.waitKey(1) == ord('q'):
 
 ```
 
+### Pywin32 · 库 
+【文章：】[【掘金Link1】](https://juejin.cn/post/7090752895699648549)  [【小鹏同学公号 · 函数模板】](https://mp.weixin.qq.com/s/s2cDsD0f-orJpydYB_sHXg)  
+[【微软键盘码】](https://learn.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes)/[【CSDN键码】](https://blog.csdn.net/zhanglidn013/article/details/35988381)/[【图床 · 键码对照表.jpg】](https://www.imagehub.cc/image/JPninT)
+```Python
+import win32gui, win32api, win32con
+
+win32api.SetCursorPos((100, 100)) # 移动鼠标至坐标
+x, y = win32api.GetCursorPos() # 获取当前鼠标坐标
+
+win32api.keybd_event(78, 0, 0, 0) # 模拟键盘,传入键码78
+win32api.keybd_event(78, 0, win32con.KEYEVENTF_KEYUP, 0)
+
+handle = win32gui.FindWindow(None, '记事本')
+# 获取窗口句柄
+handleDetail = win32gui.GetWindowRect(handle)
+# 返回句柄窗口的左上xy + 右下xy坐标
+```
 
 
 ---
-## Python程序/脚本，如何打包发布？
-2022年10月23日
-### **【Python嵌入式打包】**  
-[【视频】](https://www.bilibili.com/video/BV1684y1z7Nj)-[【图文教程文章】](https://www.cnblogs.com/BEMAKE/p/16806999.html)  
-1. 在Python官网下载 embeddable版本 32位 3.7/3.8版 [【链接Link】](https://www.python.org/downloads/windows/)
-2. 解压zip文件
-3. 下载`get-pip.py`文件，打开网站把内容复制粘贴到新建get-pip.py文件里保存，`if --name--`结尾  [【链接Link】](https://bootstrap.pypa.io/get-pip.py)
-4. 安装 pip包管理工具 约20MB 可不装，可在其他环境装了之后复制过去，节省空间。  
-    1. 在文件路径上输入cmd打开命令管理器，`python get-pip.py`运行，下载`Lib` `Scripts`等文件夹，第三方库保存在Lib文件夹内。(关闭代理)
-    2. **直接将上面的py保存到txt**，拖动文件到python.exe上可以直接打开，更加简单快捷。  
-5. Note打开`python3x._pth` 删掉最后的#注释`#import site` 保存
-6. **安装第三方库**，进入Scripts文件夹，打开cmd，使用正常的pip安装命令即可，如`pip install numpy`, 文件会被安装在当前环境的`Lib\site-packages`文件夹内
-7. **运行程序**：
-   1. 在`python.exe`目录打开cmd，键入`python.exe demo.py`即可运行`demo.py`
-   2. 使用BAT批处理程序调用
-        ```bat
-        @echo off
-        chcp 65001
-        .\runtime\2python.exe .\demo.py
-        ```
-   3. 使用知乎大佬的 PyStand程序调用 ↓ 
-### **【PyStand】韦易笑大佬的嵌入式Python启动器**
-[【知乎文章】](https://www.zhihu.com/question/48776632/answer/2336654649) / [【GitHub】](https://github.com/skywind3000/PyStand)  
-1. 下载压缩包，解压 [【GitHub releases Downlows】](https://github.com/skywind3000/PyStand/releases)
-2. **第三方库**，把电脑中相同的Python环境的库复制到`site-packages`(不过很容易漏掉，一个库通常包含多个文件夹)
-3. 代码加密？ 加密方法见原作者描述
-4. **运行程序**：
-   - 运行`PyStand.exe`程序会调用`python`运行与程序同名的`.int`文件，比如`PyStand.int`，将py代码写入`.int`文件内即可
-### PyInstaller
-参考文章： [【知乎】](https://zhuanlan.zhihu.com/p/470301078) / [【CSDN过程+去坑】](https://blog.csdn.net/hdudb/article/details/122055537)  
-1. 安装Pyinstaller，`pip install pyinstaller`
-2. 在`.py`文件的目录运行打开cmd命令窗口
-3. 命令行窗口输入`pyinstaller demo.py`即可。  
-**其中，可以填入的一些参数选项：**  
-`-F` 大写，是onefile，打包成单个独立exe程序  
-(本质上就是1个自解压程序，将整个Python解释器解压至temp缓存目录再运行，关闭后又删除如此反复，所以启动速度迟钝、慢半拍)  
-`-D` 大写,默认选项可不填。D是onedir，打包生成多个依赖文件和exe程序，放在一个文件夹内，略显凌乱，但启动速度快，可以在上层目录用 BAT调用程序启动。(或PyStand调用)  
-`-c` 显示命令行窗口  
-`-w` 不显示命令行窗口，去除黑框框  
-`-i` 修改生成exe程序的图标，ico格式尺寸16*16 32*32等  
-示例：`pyinstaller -w -i D:\123.ico demo.py`
-4. 其它可能会出现的问题，有些库可能打包不全，需要手动复制到文件夹内
+## Python嵌入式
+[【Python嵌入式 DIY Pyinstaller】](https://github.com/750ti/DIY-Pyinstaller-embed)https://github.com/750ti/DIY-Pyinstaller-embed   
+【PyStand】嵌入式Python启动器[【知乎文章】](https://www.zhihu.com/question/48776632/answer/2336654649) / [【GitHub】](https://github.com/skywind3000/PyStand)  
+
 
 
 ---
@@ -297,8 +283,8 @@ os.remove(path) #删除指定文件, 需有删除权限,并文件无只读等属
 os.rename("c:\\text1.txt","c:\\text2.txt") # 文件改名，改路径则为移动文件，若无文件/已存在则抛出异常，不可跨盘符
 os.replace(old,new) #同上改名/移动，但目标存在则覆盖，不跨盘
 
-os.isdir(path) # 判断path是否为文件夹
-os.isfile(path) # 判断path是否为文件
+os.path.isdir(path) # 判断path是否为文件夹
+os.path.isfile(path) # 判断path是否为文件
 os.exists("text.txt") # 判断具体路径  或文件是否存在，返回布尔值，填绝对/相对路径和文件名
 os.listdir(path) # 返回path目录下的文件和列表，列表形式，填空则为当前目录
 
