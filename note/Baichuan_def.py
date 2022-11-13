@@ -122,28 +122,29 @@ def zhaotu(path, mode=1, confidence=0.8, xx=0, yy=0): # 传入图片非中文绝
     image_run = pyautogui.locateOnScreen(path, confidence=confidence)
     if image_run is not None: # 判断查找后的值是否 不是空的
         x, y = pyautogui.center(image_run) # 将图片的坐标赋值
-        print("√ 找到图片，坐标为：", x, y)
+        # print("√ 找到图片，坐标为：", x, y)
         x = x + xx # 偏移量重新赋值
         y = y + yy
         if mode == 1:
             pyautogui.click(x,y) # 点击该坐标
-            print("点击坐标")
+            print("√ 找图成功，并单击。坐标为：", x, y)
         elif mode == 2:
             pyautogui.doubleClick(x,y) # 双击该坐标
-            print("双击坐标")
+            print("√ 找图成功，并双击。坐标为：", x, y)
         elif mode == 3:
             pyautogui.rightClick(x,y) # 右击该坐标
-            print("右击坐标")
+            print("√ 找图成功，并右击。坐标为：", x, y)
         elif mode == 4:
             pyautogui.moveTo(x,y) # 鼠标移动到该坐标
-            print("鼠标移动到坐标")
+            print("√ 找图成功，并移动到坐标。坐标为：", x, y)
         elif mode == 0: # 0 无动作
+            print("√ 找图成功，无动作。坐标为：", x, y)
             pass
         else:
             print("mode模式0-4填写错误,已忽略本次操作")
         # pyautogui.leftClick(x, y) # 点击该坐标
     else:
-        print("X 本次找图: 没有找到图片，请检查路径、图片、屏幕显示等等")
+        print("X 本次找图失败，请检查路径、图片、屏幕显示等等")
         return False
     return True
 
@@ -153,25 +154,26 @@ def zhaose(x, y, colour, mode=1, xx=0, yy=0): # 参数为坐标x y、(颜色)、
     x = x + xx
     y = y + yy
     if run == (colour):
-        print('√ 找到颜色')
+        # print('√ 找到颜色')
         if mode == 1:
             pyautogui.click(x, y)
-            print("点击坐标")
+            print("√ 找色成功，并单击坐标，坐标为：", x, y)
         elif mode == 2:
             pyautogui.doubleClick(x, y)
-            print("双击坐标")
+            print("√ 找色成功，并双击坐标，坐标为：", x, y)
         elif mode == 3:
             pyautogui.rightClick(x, y)
-            print("右击坐标")
+            print("√ 找色成功，并右击坐标，坐标为：", x, y)
         elif mode == 4:
             pyautogui.moveTo(x, y)
-            print("鼠标移动到坐标")
+            print("√ 找色成功，并移动到坐标，坐标为：", x, y)
         elif mode == 0:
+            print("√ 找色成功，无动作。，坐标为：", x, y)
             pass
         else:
             print("mode模式0-4填写错误,已忽略本次操作")
     else:
-        print('X 找不到颜色')
+        print('X 本次找色失败。')
         return False
     return True
 
