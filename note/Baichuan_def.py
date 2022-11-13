@@ -28,9 +28,11 @@ if_dir(path)                                # 判断path是否为文件夹, "c:\
 if_file(path)                               # 判断path是否为文件夹, "c:\aaa.txt"=True, "c:\123"=False
 if_path(path)                               # 判断路径是否存在，不存在则创建
 path_to_suffix(path)                        # 将文件路径 to .txt 转换为后缀, "c:\123.txt" to ".txt"
+path_xiegang(path, mode=1)                  # 路径\\斜杠转义自动处理, 默认1=c:/aa/1.jpg , 2=c:\\aa\\2.jpg
 
 path_to_filename_list(path, notdir=False)   # 传path+是否没有文件夹,传真假,默认False,遍历path下所有文件+文件夹返回list "c:\path"to" [c:\path\11.txt, c:\path\22.txt, ...] "
 path_file_to_list(path) # 改名，改成上面的 ↑
+
 
 # 找图/找色 函数
 zhaotu(path, mode, 0.8, xx, yy) # 按键精灵找图, 传入图片绝对路径、mode模式、相似度、偏移量....【除了路径, 其他参数都可以不传】
@@ -111,7 +113,13 @@ def path_to_filename_list(path, notdir=False): # 传path+是否没有文件夹,�
         def_files_list.append(os.path.join(path, file_name_list))
         # print(file_name_list)
     return def_files_list
-
+def path_xiegang(path, mode=1): # 路径\\斜杠转义自动处理, 默认1=c:/aa/1.jpg , 2=c:\\aa\\2.jpg
+    if mode == 1:
+        return path.replace('\\','/') # 替换为D:/图片/Zbtv1.jpg
+    if mode == 2:
+        return path.replace('\\','\\\\') # 替换为D:\\图片\\Zbtv1.jpg
+    else:
+        print('X path_xiegang 默认函数模式1 = 反斜杠 to 斜杠, 模式2 = 反斜杠 to 双反斜杠')
 
 # a = "D:\\PyCharm\\image"
 # b = if_dir(a)
