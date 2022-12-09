@@ -1,17 +1,12 @@
-
-
 # PyQt5 学习笔记
 
-本章和接下来几章，会列出Qt的 `常见控件` ，并且描述这些控件的 `常用操作` 。
-要了解Qt `所有控件` 和它们 `所有操作` ，请参阅如下官方手册：
-
+---
 [Python Qt官方文档 - 控件部分](https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/index.html#module-PySide2.QtWidgets)
+
+[【白月黑羽】Qt图形界面 图文教程合集](https://www.byhy.net/tut/py/gui/qt_05_1/)
+
 [作者视频](https://www.bilibili.com/video/BV1Zf4y1W79o?p=1)
-
-
-2022年12月9日22:08:18
-
-https://www.bilibili.com/video/BV1Zf4y1W79o?p=14
+https://www.bilibili.com/video/BV1Zf4y1W79o?p=1
 
 
 ---
@@ -114,6 +109,31 @@ def print_logo(self,test): # 打印logo日志, 传入字符串，并显示新消
 `button.setText(text) # 修改标签文本内容`
 
 ---
+
+
+## 选择文件 / 选择文件夹 `QFileDialog`
+
+选择文件或者目录
+`getExistingDirectory` 选择目录，字符串。
+`getOpenFileName` 选择单个文件，字符串。
+`getOpenFileNames` 选择 单个/多个 文件，返回列表。
+
+```py
+image_file, _ = QFileDialog.getOpenFileName(self,'选择文件', './','选择图片 (*.jpg*.png *.jpeg)') # 传参（self父类，选择框标题，起始目录'D://'，说明+格式要求）
+# 选择单个文件，返回两个参数，字符串，取消不选则为''空，
+
+image_files, _ = QFileDialog.getOpenFileNames(self,'选择单个或多个文件', './','选择图片 (*.jpg*.png *.jpeg)') # 同上，# 选择单个/多个文件，返回两个参数，接收内容为列表，取消不选则为[]空列表
+
+image_dir = QFileDialog.getExistingDirectory(self,'选择文件夹', './') # 标题、路径
+# 选择文件夹，返回文件夹路径字符串，取消不选则为''空
+
+save_path, _ = QFileDialog.getSaveFileName(self, "选择保存文件路径", './', '保存格式 (*.txt *.mpr)') # 选择保存路径, return返回选择路径，字符串，如'D:/aa/t1.txt'，取消为''空
+
+# 在 我的模板 里有详细的完成的函数
+```
+
+
+---
 ## 下拉框 / 组合选择框 `QComboBox`
 
 组合选择框，下拉框。 [官网介绍](https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QComboBox.html)
@@ -175,13 +195,13 @@ print(self.checkBox_2.isChecked())
 放在循环中，但是当处理时间很长，如超过10秒，防止未响应，最好是在多线程运行
 
 ```py
-self.progressBar.setRange(0,5) # 设定步骤个数，开始和结束
-self.progressBar.setValue(3) # 具体到了哪一步
+self.progressBar.setRange(0,10) # 设定进度的步数，起始和结束
+self.progressBar.setValue(3) # 更新进度到哪一步
 self.progressBar.reset() # 重置进度条
 ```
 
-就设定了，进度分为5
-progressBar
+
+
 
 
 
@@ -227,16 +247,38 @@ def input_excel(self, lists):
 
 ```
 
+---
 
 
+## 日期控件 `QDateEdit` 
+
+QDate 对象的具体说明[参考官方文档](https://doc.qt.io/qtforpython-5.12/PySide2/QtCore/QDate.html)
+
+```py
+
+qdate = self.dateEdit.date()
+qdate.toString('yyyy-MM-dd') # 获取控件内容，并转换成指定格式
+# 年月日
+year = qdate.year()   # 返回 2020
+month = qdate.month() # 返回 5
+day = qdate.day()     # 返回 2
+# 格式参考
+'yyyy-MM-dd dddd'=2000-01-01 星期六
+
+# 相关内容不太好找，已放弃摆烂
+
+```
+
+---
+
+> 未完待续...  
 
 
+---
 
-
-
-
-
-
+笔记时间：
+2022年12月9日下午晚上 创建  
+2022年12月10日05:37:08 完成大部分  
 
 
 
