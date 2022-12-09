@@ -1,10 +1,4 @@
 
-[![百百川](https://img.shields.io/badge/bilibili-%E7%99%BE%E7%99%BE%E5%B7%9D-ff69b4)](https://space.bilibili.com/150478041)
-[![百百川](https://img.shields.io/badge/%E7%9F%A5%E4%B9%8E-%E7%99%BE%E7%99%BE%E5%B7%9D-blue)](https://www.zhihu.com/people/baibaichuan)
-[![百百川](https://img.shields.io/badge/GitHub-750ti-black)](https://github.com/750ti)
-[![百百川](https://img.shields.io/badge/gitee-%E7%99%BE%E7%99%BE%E5%B7%9D-red)](https://gitee.com/gtx750ti)
-![](https://img.shields.io/badge/%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4-2022年11月13日-lightgrey)
-
 
 
 # Python常用代码集 md版
@@ -12,10 +6,8 @@
 ---
 
 
-TK窗口库[链接](https://www.jianshu.com/p/91844c5bca78)
-
-pynput库
-截图 = grab_screen(region=(x1, y1, x2, y2))
+- TK窗口库[链接](https://www.jianshu.com/p/91844c5bca78)
+- pynput库，截图 = grab_screen(region=(x1, y1, x2, y2))
 
 图像PIL库的基础用法笔记  
 [Link1](https://www.jb51.net/article/225452.htm) / [Link2](https://blog.csdn.net/zhangziju/article/details/79123275) / [Link3](https://blog.csdn.net/qq_37816453/article/details/80434150)
@@ -55,7 +47,8 @@ pyautogui.alert('这个消息弹窗是文字+OK按钮')
 pyautogui.confirm('这个消息弹窗是文字+OK+Cancel按钮')
 pyautogui.prompt('这个消息弹窗是让用户输入字符串，单击OK')
 
-path.replace("\\", "/") #将路径中的\转成/，解决路径转义问题
+path.replace("\\", "/") #路径转义\转/，c:\aa\1.jpg → c:/aa/1.jpg
+path.replace('\\','\\\\') #双反斜杠 c:\\aa\\2.jpg
 
 random.choice(png_list) # 从列表中随机取1个元素
 random.choices(png_list, k=20) # 从列表中随机截取20个元素，返回一个新列表
@@ -94,6 +87,82 @@ if cv2.waitKey(1) == ord('q'):
 ```Python
 
 ```
+### 内容模板
+```Python
+
+```
+
+
+
+### PyQt5 PySide2 相关内容
+- ==【PyCharm】== 安装pyqt5-tools，打开File文件—>Settings设置—工具->External Tools外部工具，配置designer和pyuic工具
+    - 添加Name:QtDesigner，填入`designer.exe`路径，Working directory工作参数 $ProjectFileDir$  
+    - add Name:Pyuic,Program填入`pyuic5.exe`路径，Arguments实参：`-m PyQt5.uic.pyuic $FileName$ -o $FileNameWithoutExtension$.py`
+    Working directory工作目录：$FileDir$  
+    [CSDN 相关参考链接](https://blog.csdn.net/qq_40548768/article/details/121051406)
+- ==【VSCode】PyQt5：== 安装pyqt integration扩展，进入设置-拓展-PYQT integration  
+`Pyqt-integration › Pyuic: Cmd`, 填入`pyuic5.exe`路径  
+`Pyqt-integration › Qtdesigner: Path`, 填入`designer.exe`路径  
+在ui文件右键`Compile From`转换  
+[参考文章](https://blog.csdn.net/anwei20000/article/details/127951729)  
+- ==【VSCode】PySide2：== 安装PySide2-VSC，进入设置-拓展-PySide2-VSC，  
+`Designer-creator: Path`, 填入`designer.exe`路径  
+`Uic: Cmd`, 填入`pyuic5.exe`路径  
+在ui文件右键`Compile From`转换  
+- ==【手动执行】==, 在pyuic5目录下启动cmd命令窗口执行`pyuic5 -o demo.py demo.ui`，执行转换当前目录下的ui文件至py文件  
+
+[窗口测试和调用ui参考帖子](https://blog.csdn.net/weixin_33895016/article/details/94172010)
+
+
+
+```Python
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QDockWidget, QListWidget
+from PyQt5.QtGui import *
+from ui_demo import Ui_MainWindow  #导入创建的GUI类
+
+#自己建一个mywindows类，mywindow是自己的类名。QtWidgets.QMainWindow：继承该类方法
+class mywindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    #__init__:析构函数，也就是类被创建后就会预先加载的项目。
+    # 马上运行，这个方法可以用来对你的对象做一些你希望的初始化
+    def __init__(self):
+        #这里需要重载一下mywindow，同时也包含了QtWidgets.QMainWindow的预加载项。
+        super(mywindow, self).__init__()
+        self.setupUi(self)
+if __name__ == '__main__': #如果整个程序是主程序
+    # QApplication相当于main函数，也就是整个程序（很多文件）的主入口函数。
+    # 对于GUI程序必须至少有一个这样的实例来让程序运行。
+    app = QtWidgets.QApplication(sys.argv)
+    #生成 mywindow 类的实例。
+    window = mywindow()
+    #有了实例，就得让它显示，show()是QWidget的方法，用于显示窗口。
+    window.setWindowTitle("窗口标题")
+    window.show()
+    # 调用sys库的exit退出方法，条件是app.exec_()，也就是整个窗口关闭。
+    # 有时候退出程序后，sys.exit(app.exec_())会报错，改用app.exec_()就没事
+    # https://stackoverflow.com/questions/25719524/difference-between-sys-exitapp-exec-and-app-exec
+    sys.exit(app.exec_())
+```
+
+
+
+### keyboard · 键盘控制 [【GitHub自述】](https://github.com/boppreh/keyboard)
+```Python
+keyboard.wait('a') #阻塞暂停并持续监听按键a, 直到按下
+
+keyboard.add_hotkey('esc', def_aaa) #按esc 调用aaa函数
+keyboard.add_hotkey('ctrl+alt', def_bbb, args=('传参')) #按ctrl+alt 调用bbb函数，并传参
+keyboard.wait('q') # 按q键时结束监听组合，停止阻塞继续往下执行，不可循环
+
+event = keyboard.read_event()
+#阻塞,获取按键按下事件并判断是否按下和等于xx，按任意键继续，套循环内
+if event.event_type == keyboard.KEY_DOWN and event.name == 'space':
+    print('space was pressed')
+
+```
+
 
 ### Pywin32 · 库 
 【文章：】[【掘金Link1】](https://juejin.cn/post/7090752895699648549)  [【小鹏同学公号 · 函数模板】](https://mp.weixin.qq.com/s/s2cDsD0f-orJpydYB_sHXg)  
@@ -317,12 +386,14 @@ pyautogui.moveTo(width/2,height/2) # 移动鼠标至屏幕中间
 pyautogui.click() # .click鼠标单击 .doubleClick双击 .rightClick右击
 pyautogui.click(x=100, y=200, duration=2)  # duration=2 移动周期2秒
 pyautogui.doubleClick()  # 鼠标当前位置左击两下-双击
+now_pos=pyautogui.position() # 获取记录鼠标当前位置
 
-pyautogui.moveTo(x,y)  # 移动鼠标至该坐标
+pyautogui.move(x,y) # 移动鼠标至相对坐标
+yautogui.moveRel(100,50) # 相对移动
+
+pyautogui.moveTo(x,y)  # 移动鼠标至绝对坐标
 pyautogui.moveTo(x,y,duration=1)  # 移动鼠标过程中，周期为1秒
 # 移动鼠标的命令都可以使用移动时间周期命令，模拟线性移动，非瞬间移动
-pyautogui.moveRel(100,50) # 相对移动
-now_pos=pyautogui.position() # 获取记录鼠标当前位置
 
 pyautogui.mouseDown()
 pyautogui.mouseUp()  # 【按下 / 松开】鼠标左键
@@ -356,6 +427,8 @@ pyautogui.locateOnScreen('Part.png', region=(0, 0, 600, 800))  # region：缩小
 - ### 弹窗
 ```python
 pyautogui.alert(text='⚠️这是一段警告!!!!!!', title='alert 测试', button='OK')
+pyautogui.confirm(text='窗口名', title='弹窗内容', buttons=range(10))
+# ↑ 弹出一个带10个数字按钮窗口，可接受返回数值
 ```
 
 ### keyboard
