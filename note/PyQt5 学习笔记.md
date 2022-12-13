@@ -26,7 +26,12 @@ button.setEnabled(False) # 禁用  某个控件，禁用后用户不可操作。
 
 # ↓ 修改某个控件的 背景颜色，传入'red', 'blue', #72a771; 等等参数
 self.button.setStyleSheet('background-color: #72a771;') # 背景颜色
+self.setWindowIcon(QIcon('./Icon/cat.ico')) # 初始化窗口logo图标ico格式
 
+# .ui 转 .py 在ui目录运行cmd，-x为提供if_name_测试代码http://t.csdn.cn/GRG7D
+pyuic5 test.ui -o test.py -x
+
+self.button.setToolTip('这是一个<b>按钮哦~~</b>') # 给某个控件添加悬停提醒气泡
 
 ```
 
@@ -34,11 +39,11 @@ self.button.setStyleSheet('background-color: #72a771;') # 背景颜色
 ## 按钮 `QPushButton` 
 
 ```py
-push1.setText('按钮1') # 修改按钮的文本 传入字符串
+button1.setText('按钮1') # 修改按钮的文本 传入字符串
 
-push1.clicked.connect(self.function) # 当按钮被按下，则执行某个函数
-push1.clicked.connect(lambda: self.function('123')) # 函数需传参时用lambda表达式
-
+button1.clicked.connect(self.function) # 当按钮被按下，则执行某个函数
+button1.clicked.connect(lambda: self.function('123')) # 函数需传参时用lambda表达式
+self.close() # 关闭程序
 
 ```
 
@@ -212,6 +217,7 @@ self.progressBar.reset() # 重置进度条
 
 ```py
 txt = self.excel.item(0,0).text() # 获取单元格的文本内容，参数为 行/列 索引
+# 注意索引列表不存在则报错，规避
 
 self.excel.setItem(1, 1, QTableWidgetItem('白月黑羽')) # ↓ 新增/修改表格内容。传入 行/列 的索引，和表格实例化后的内容。索引与表格不符则跳过不报错
 self.excel.item(0,0).setText('江老师') # 修改表格已有内容。传入行/列索引，索引无效则报错
@@ -224,7 +230,7 @@ self.excel.setRowCount(10) # 设置修改 表格行数
 self.excel.setColumnCount(10) # 设置修改 表格列数
 self.excel.clearContents() # 删除表格所有内容，但表格行列还在，删除用setRowCount
 
-self.excel.horizontalHeader().setStretchLastSection(True) #表格最后1列贴边不留空
+self.excel.horizontalHeader().setStretchLastSection(True) #最后列贴边不留空
 # 或者在Qt设计师编辑器内，表格控件属性里，勾选 HorizontalHeaderStretchLastSection
 
 self.excel.cellChanged.connect(self.function) # 信号，当表格内容改变时调用函数
@@ -268,6 +274,24 @@ day = qdate.day()     # 返回 2
 # 相关内容不太好找，已放弃摆烂
 
 ```
+
+---
+
+### PyQT5播放音频 [CSDN文章](http://t.csdn.cn/7zEqJ)
+
+```py
+import time
+from PyQt5.QtCore import QUrl
+from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+file = QUrl.fromLocalFile("E:\[音效素材]\鼓+锣-转场提示音效.wav") # 定义文件路径
+content = QMediaContent(file) # 创建 QMediaContent 对象
+player = QMediaPlayer() # 创建 QMediaPlayer 对象
+player.setMedia(content) # 设置媒体内容
+player.setVolume(50.0) # 设置音量
+player.play() # 播放音频
+time.sleep(2)# 程序暂停，不能低于音频时长
+```
+
 
 ---
 
