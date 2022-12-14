@@ -293,10 +293,38 @@ time.sleep(2)# 程序暂停，不能低于音频时长
 ```
 
 
+
+
 ---
 
 > 未完待续...  
 
+
+
+
+
+---
+
+PyQt5 运行ui模板
+```
+# -*- coding: utf-8 -*-
+# https://www.cnblogs.com/linyfeng/p/11832237.html
+
+import sys
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QColor, QBrush, QIcon
+from UI_Windows import * # 导入UI
+
+class MyMainForm(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MyMainForm, self).__init__(parent)
+        self.setupUi(self)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    myWin = MyMainForm()
+    myWin.show()
+    sys.exit(app.exec_())
+```
 
 ---
 
