@@ -6,29 +6,30 @@
 [【白月黑羽】Qt图形界面 图文教程合集](https://www.byhy.net/tut/py/gui/qt_05_1/)
 
 [作者视频](https://www.bilibili.com/video/BV1Zf4y1W79o?p=1)
+
 https://www.bilibili.com/video/BV1Zf4y1W79o?p=1
 
 
 ---
 # 【注意事项】 缩进 Tab 与 空格 互斥
 
-本文的代码示例，缩进使用的是Tab，直接复制进IDE可能会报错，自行替换成**四个空格**
+> 本文的代码示例，缩进是Tab，而IDE缩进为4空格，可能冲突报错，自行替换成**四个空格**
 
 ---
 
 ### 通用示例：
 
-```py
+```python
 button.setText(text) # 改变 按钮/line行输入框 的文本，传入字符串
 
 button.setEnabled(True) # 启用  某个控件，所有继承自QWidget类控件，都支持。
 button.setEnabled(False) # 禁用  某个控件，禁用后用户不可操作。
 
-# ↓ 修改某个控件的 背景颜色，传入'red', 'blue', #72a771; 等等参数
+# ↓ 修改某个控件颜色，传入'red', 'blue', #72a771; 等参数,留空恢复默认
 self.button.setStyleSheet('background-color: #72a771;') # 背景颜色
 self.setWindowIcon(QIcon('./Icon/cat.ico')) # 初始化窗口logo图标ico格式
 
-# .ui 转 .py 在ui目录运行cmd，-x为提供if_name_测试代码http://t.csdn.cn/GRG7D
+# .ui转.py 在ui目录运行cmd，-x是生成if_name_测试代码,http://t.csdn.cn/GRG7D
 pyuic5 test.ui -o test.py -x
 
 self.button.setToolTip('这是一个<b>按钮哦~~</b>') # 给某个控件添加悬停提醒气泡
@@ -38,7 +39,7 @@ self.button.setToolTip('这是一个<b>按钮哦~~</b>') # 给某个控件添加
 ---
 ## 按钮 `QPushButton` 
 
-```py
+```python
 button1.setText('按钮1') # 修改按钮的文本 传入字符串
 
 button1.clicked.connect(self.function) # 当按钮被按下，则执行某个函数
@@ -52,7 +53,7 @@ self.close() # 关闭程序
 ## 单行文本框 `QLineEdit` 
 
 ![](https://doc.qt.io/qtforpython/_images/windows-lineedit.png)
-```py
+```python
 self.line.text() # 读取文本框的内容
 self.line.setText(text) # 把内容写入到文本框内
 # 冷门功能 ↓ 
@@ -70,9 +71,10 @@ def function（self, text): # 同上，回调函数会传入文本框的内容�
 
 ---
 ## 多行纯文本框 `QPlainTextEdit`
+
 纯文本与 QTextEdit 不同，TextEdit 是富文本框，可以修改加粗、颜色、字体、字号等等内容。
 
-```py
+```python
 self.edit.toPlainText() # 获取编辑框内的文本内容
 self.edit.setPlainText(text) # 把内容写入到文本框内，覆盖，之前内容会清除
 self.edit.insertPlainText('这是在光标插入的信息') # 在光标处插入文本，不换行
@@ -80,7 +82,10 @@ self.edit.appendPlainText('你好，这是新加入的消息') # 在末尾添加
 
 self.edit.setPlaceholderText('请在这里输入薪资表...') # 纯文本框 没消息时的提示消息
 self.selection = self.edit.textCursor().selectedText() # 获取选中文本
-edit.cursorPositionChanged.connect(self.function) # 当文本框光标改变时，调用函数
+edit.cursorPositionChanged.connect(self.function) # 信号，当文本框光标改变时
+edit.textChanged.connect(self.function) # 信号，当文本被修改时
+
+```
 
 self.edit.clear() # 清除文本框的内容
 self.edit.copy() # 只复制 选中文本 的内容
@@ -92,12 +97,13 @@ edit.document().setMaximumBlockCount(100) # 最大行数，超过则删除前面
 
 ---
 ## 文本浏览框 `QTextBrowser`
+
 `QTextBrowser` 是 `只能查看文本` 控件。
 通常用来显示一些操作日志信息、或者不需要用户编辑的大段文本内容。
 该控件获取文本、修改、清除、剪贴板复制粘贴 等等， 都和上面纯文本框是一样的。
 
 不同的地方：
-```py
+```python
 edit.append('你好，白月黑羽') # 在编辑框末尾添加文本内容
 edit.insertPlainText('你好，白月黑羽') # 在编辑框末尾添加文本内容，不换行
 
@@ -109,6 +115,7 @@ def print_logo(self,test): # 打印logo日志, 传入字符串，并显示新消
 
 ---
 ## 标签 `QLabel`
+
 常见的标签，可以显示文字（包括纯文本和富文本）、图片 甚至动画。
 插入图片在 Qlabel - pixmap 内可选择图片路径。
 `button.setText(text) # 修改标签文本内容`
@@ -123,7 +130,7 @@ def print_logo(self,test): # 打印logo日志, 传入字符串，并显示新消
 `getOpenFileName` 选择单个文件，字符串。
 `getOpenFileNames` 选择 单个/多个 文件，返回列表。
 
-```py
+```python
 image_file, _ = QFileDialog.getOpenFileName(self,'选择文件', './','选择图片 (*.jpg*.png *.jpeg)') # 传参（self父类，选择框标题，起始目录'D://'，说明+格式要求）
 # 选择单个文件，返回两个参数，字符串，取消不选则为''空，
 
@@ -143,7 +150,7 @@ save_path, _ = QFileDialog.getSaveFileName(self, "选择保存文件路径", './
 
 组合选择框，下拉框。 [官网介绍](https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QComboBox.html)
 
-```py
+```python
 mode = cbox.currentText() # 获取当前选项的 文本/内容
 
 cbox.addItem('选项x') # 在末尾，新增一个选项
@@ -162,7 +169,7 @@ cbox.currentIndexChanged.connect(self.function) # 信号，当选项改变时执
 如果你有多组单选按钮， 每组都应该有不同的父控件，或者不同的Layout。
 **建议：** 把每一组单选按钮，放到不同的按钮组，右键分组。 [作者视频讲解](https://www.bilibili.com/video/BV1cJ411R7bP?p=12)
 
-```py
+```python
 # 示例： 创建了两个按钮，猫和狗，放进了叫 cat_dog 的按钮组
 self.cat_dog.buttonClicked.connect(self.function) # 信号，点击任意按钮 调用函数
 txt = self.cat_dog.checkedButton().text() # 获取按钮组里，选项的文本，字符串
@@ -178,7 +185,7 @@ txt = self.cat_dog.checkedButton().text() # 获取按钮组里，选项的文本
 多选模式，需要注意
 在 Qt设计师编辑器中，可以设置 按钮组 的 `exclusive` 属性，√为单选，X为多选
 
-```py
+```python
 # 示例：创建多个勾选按钮，并放进 buttonGroup_feizai 按钮组
 self.buttonGroup_feizai.buttonClicked.connect(self.function) # 信号 调用函数
 # 单选模式
@@ -199,7 +206,7 @@ print(self.checkBox_2.isChecked())
 
 放在循环中，但是当处理时间很长，如超过10秒，防止未响应，最好是在多线程运行
 
-```py
+```python
 self.progressBar.setRange(0,10) # 设定进度的步数，起始和结束
 self.progressBar.setValue(3) # 更新进度到哪一步
 self.progressBar.reset() # 重置进度条
@@ -215,7 +222,7 @@ self.progressBar.reset() # 重置进度条
 
 [【文章介绍】](https://www.byhy.net/tut/py/gui/qt_05_2/#表格)
 
-```py
+```python
 txt = self.excel.item(0,0).text() # 获取单元格的文本内容，参数为 行/列 索引
 # 注意索引列表不存在则报错，规避
 
@@ -260,7 +267,7 @@ def input_excel(self, lists):
 
 QDate 对象的具体说明[参考官方文档](https://doc.qt.io/qtforpython-5.12/PySide2/QtCore/QDate.html)
 
-```py
+```python
 
 qdate = self.dateEdit.date()
 qdate.toString('yyyy-MM-dd') # 获取控件内容，并转换成指定格式
@@ -277,9 +284,9 @@ day = qdate.day()     # 返回 2
 
 ---
 
-### PyQT5播放音频 [CSDN文章](http://t.csdn.cn/7zEqJ)
+## PyQT5播放音频 [CSDN文章](http://t.csdn.cn/7zEqJ)
 
-```py
+```python
 import time
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -289,11 +296,47 @@ player = QMediaPlayer() # 创建 QMediaPlayer 对象
 player.setMedia(content) # 设置媒体内容
 player.setVolume(50.0) # 设置音量
 player.play() # 播放音频
-time.sleep(2)# 程序暂停，不能低于音频时长
+time.sleep(2) # 程序暂停，不能低于音频时长
 ```
 
 
+----
 
+## 拖拽文件至窗口，获取文件路径
+
+文章1 http://t.csdn.cn/okZdU
+文章2 http://t.csdn.cn/h4JKK
+
+在Qt设计师编辑器中，大部分控件默认开启 `setAcceptDrops` 功能，拖拽时会导致重复获取，
+可将无关控件的 `setAcceptDrops` 功能禁用。
+
+```python
+self.setAcceptDrops(True) # 初始化，# 调用Drops方法
+def dragEnterEvent(self, evn): # 当有文件拖入时执行该函数
+	self.setWindowTitle('鼠标拖入窗口了')
+	path_list = evn.mimeData().text().replace('file:///', '') # 获取拖入的文件内容
+	self.print_logo('文件路径：\n' + path_list)
+	# 鼠标放开函数事件
+	evn.accept()
+def dropEvent(self, evn): # 松开鼠标后执行
+	self.setWindowTitle('鼠标放开了')
+
+```
+
+## 2.纯文本输入框控件，拖入文件，获取路径
+
+有缺点，同时拖入多文件时会有奇奇怪怪的问题，只适合拖入单文件。（2022年12月18日）
+
+```python
+self.textEdit.textChanged.connect(self.editchange)
+def editchange(self):
+	if self.textEdit.toPlainText().find('file:///') >= 0: # 
+		path_name = self.textEdit.toPlainText().replace('file:///', '')
+		self.textEdit.setPlainText(path_name + '\n')
+```
+
+
+---
 
 ---
 
@@ -302,11 +345,10 @@ time.sleep(2)# 程序暂停，不能低于音频时长
 
 
 
-
 ---
 
 PyQt5 运行ui模板
-```
+```python
 # -*- coding: utf-8 -*-
 # https://www.cnblogs.com/linyfeng/p/11832237.html
 
@@ -331,6 +373,6 @@ if __name__ == "__main__":
 笔记时间：
 2022年12月9日下午晚上 创建  
 2022年12月10日05:37:08 完成大部分  
-
+2022年12月18日
 
 
